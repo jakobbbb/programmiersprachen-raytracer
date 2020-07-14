@@ -21,6 +21,16 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - name: deps
+      run: |
+        sudo apt install -y \
+        cmake \
+        xorg-dev \
+        libglu1-mesa-dev \
+        freeglut3-dev \
+        libxi-dev \
+        libxrandr-dev
+
     - name: build
       run: |
         mkdir build
