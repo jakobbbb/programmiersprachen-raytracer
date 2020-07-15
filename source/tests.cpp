@@ -69,7 +69,7 @@ TEST_CASE("shapes: print", "[shape]") {
   }
 }
 
-TEST_CASE("intersect_ray_sphere", "[intersect]") {
+TEST_CASE("intersect_ray_sphere (test w/ glm)", "[intersect]") {
   // Ray
   glm::vec3 ray_origin{0.f, 0.f, 0.f};
   glm::vec3 ray_direction{0.f, 0.f, 1.f}; // normalized!
@@ -97,6 +97,30 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
   REQUIRE(hitpoint.intersection_point ==
           ray_origin + (distance * ray_direction));
   REQUIRE(hitpoint.intersection_direction == ray_direction);
+}
+
+TEST_CASE("intersect_ray_sphere", "[intersect]") {
+  GIVEN("a sphere") {
+    Color purple{0.42f, 0.09f, 0.59f};
+    Sphere s{{4.2f, 4.2f, 4.2f}, 4.2f, "Alice", purple};
+    GIVEN("a ray originiating in the sphere, w/ non-normalized direction") {
+      Ray r{{4.2f, 4.2f, 4.4f}, {0.f, 0.f, 5.f}};
+      auto hitpoint = s.intersect(r);
+      REQUIRE(hitpoint.did_intersect);
+      REQUIRE(hitpoint.distance == Approx(4.f));
+      REQUIRE(hitpoint.intersection_direction == glm::normalize(r.direction));
+    }
+    GIVEN("a ray on the sphere's surface") {
+      Ray r{{4.2f, 4.2f, 0.f}, {0.f, 0.f, 1.f}};
+      auto hitpoint = s.intersect(r);
+      REQUIRE(hitpoint.did_intersect);
+    }
+    GIVEN("a ray that doesn't intersect") {
+      Ray r{{4.2f, 4.2f, -1.f}, {0.f, 0.f, -1.f}};
+      auto hitpoint = s.intersect(r);
+      REQUIRE(false == hitpoint.did_intersect);
+    }
+  }
 }
 
 void task7() {
