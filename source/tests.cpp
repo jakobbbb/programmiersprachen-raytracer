@@ -1,9 +1,13 @@
 #define CATCH_CONFIG_RUNNER
+
+#include <catch.hpp>
+#include <iostream>
+
 #include <sphere.hpp>
 #include <box.hpp>
-#include <catch.hpp>
 
-TEST_CASE("sphere", "[sphere]") {
+
+TEST_CASE("sphere: area, volume", "[sphere]") {
   GIVEN("a sphere") {
     Sphere s{{1, -1, 2}, 4.2, "Horst", {0, 1, 1}};
     REQUIRE(Approx(221.671) == s.area());
@@ -21,7 +25,7 @@ TEST_CASE("sphere", "[sphere]") {
   }
 }
 
-TEST_CASE("box", "[box]") {
+TEST_CASE("box: area, volume", "[box]") {
   glm::vec3 p{-1, -2, -5};
   glm::vec3 q{0, 4, 2};
   GIVEN("a box defined by points `p` and `q`") {
@@ -43,6 +47,21 @@ TEST_CASE("box", "[box]") {
     Box b{{-42, -42, 0}, {0, 0, 0}, "Horst", {0, 1, 1}};
     REQUIRE(Approx(2 * 42 * 42) == b.area());
     REQUIRE(0 == b.volume());
+  }
+}
+
+TEST_CASE("shapes: print", "[shape]") {
+  GIVEN("a box") {
+    Box b{{0, 0, 0}, {1, 1, 1}, "Bjarne", {1, 1, 1}};
+    std::ostringstream os;
+    os << b;
+    REQUIRE("Shape \"Bjarne\", color (1,1,1)\n" == os.str());
+  }
+  GIVEN("a sphere") {
+    Sphere s{{0, 0, 0}, 1, "Bjarne", {1, 1, 1}};
+    std::ostringstream os;
+    os << s;
+    REQUIRE("Shape \"Bjarne\", color (1,1,1)\n" == os.str());
   }
 }
 
