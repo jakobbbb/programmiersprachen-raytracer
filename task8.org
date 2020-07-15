@@ -1,0 +1,29 @@
+#+TITLE:  Aufgabe 5.8
+
+Wird das Schlüsselwort =virtual= im =Shape=-Destruktor entfernt:
+
+#+BEGIN_SRC
+--- a/framework/shape.hpp
++++ b/framework/shape.hpp
+@@ -8,7 +8,7 @@
+ class Shape {
+   public:
+     Shape(std::string name, Color color);
+-    virtual ~Shape();
++    ~Shape();
+     virtual float area() const = 0;
+     virtual float volume() const = 0;
+#+END_SRC
+
+Dann entfällt bei =delete s2;= der Aufruf dieses Destruktors.
+
+#+BEGIN_SRC
+--- virtual	2020-07-15 17:39:37.422872309 +0200
++++ nonvirtual	2020-07-15 17:41:19.116208610 +0200
+@@ -22,7 +22,6 @@
+ Sphere destructor called.
+ Shape destructor called.
+ Deleting s2...
+-Sphere destructor called.
+ Shape destructor called.
+#+END_SRC
