@@ -109,10 +109,32 @@ void task7() {
       std::make_shared<Sphere>(position, 1.2f, "sphere1", red);
 
   s1->print(std::cout << "s1: ");
-  s2->print(std::cout << "s2: ") << "\n";
+  s2->print(std::cout << "s2: ");
+}
+
+void task8() {
+  Color red{255, 0, 0};
+  glm::vec3 position{0.f, 0.f, 0.f};
+
+  std::cout << "Creating s1...\n";
+  Sphere *s1 = new Sphere{position, 1.2f, "sphere0", red};
+  std::cout << "Creating s2...\n";
+  Shape *s2 = new Sphere{position, 1.2f, "sphere1", red};
+
+  s1->print(std::cout << "s1: ");
+  s2->print(std::cout << "s2: ");
+
+  std::cout << "Deleting s1...\n";
+  delete s1;
+  std::cout << "Deleting s2...\n";
+  delete s2;
 }
 
 int main(int argc, char *argv[]) {
+  std::cout << "=========  Aufgabe 5.7  =========\n";
   task7();
+  std::cout << "=========  Aufgabe 5.8  =========\n";
+  task8();
+  std::cout << "============  Tests  ============\n";
   return Catch::Session().run(argc, argv);
 }

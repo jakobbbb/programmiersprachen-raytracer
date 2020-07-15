@@ -1,8 +1,11 @@
 #include "shape.hpp"
+#include <iostream>
 
-Shape::Shape(std::string name, Color color) :
-  name_{name},
-  color_{color} {}
+Shape::Shape(std::string name, Color color) : name_{name}, color_{color} {
+  std::cout << "Shape constructor called.\n";
+}
+
+Shape::~Shape() { std::cout << "Shape destructor called.\n"; }
 
 std::ostream& Shape::print(std::ostream& os) const {
   os << "named \"" << name_ << "\", color " << color_;
