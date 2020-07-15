@@ -5,11 +5,14 @@ Shape::Shape(std::string name, Color color) :
   color_{color} {}
 
 std::ostream& Shape::print(std::ostream& os) const {
-  os << "Shape \"" << name_ << "\", color " << color_;
+  os << "named \"" << name_ << "\", color " << color_;
   return os;
 }
 
 std::ostream& operator<<(std::ostream& os, Shape const& s) {
-  s.print(os);
-  return os;
+  return s.print(os);
+}
+
+std::ostream& operator<<(std::ostream& os, glm::vec3 const& v) {
+  return os << "(" << v.x << "," << v.y << "," << v.z << ")";
 }

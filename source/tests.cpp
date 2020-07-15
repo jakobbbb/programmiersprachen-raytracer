@@ -55,13 +55,15 @@ TEST_CASE("shapes: print", "[shape]") {
     Box b{{0, 0, 0}, {1, 1, 1}, "Bjarne", {1, 1, 1}};
     std::ostringstream os;
     os << b;
-    REQUIRE("Shape \"Bjarne\", color (1,1,1)\n" == os.str());
+    REQUIRE("Box from (0,0,0) to (1,1,1), named \"Bjarne\", color (1,1,1)\n" ==
+            os.str());
   }
   GIVEN("a sphere") {
     Sphere s{{0, 0, 0}, 1, "Bjarne", {1, 1, 1}};
     std::ostringstream os;
     os << s;
-    REQUIRE("Shape \"Bjarne\", color (1,1,1)\n" == os.str());
+    REQUIRE("Sphere at (0,0,0) radius 1, named \"Bjarne\", color (1,1,1)\n" ==
+            os.str());
   }
 }
 

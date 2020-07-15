@@ -2,6 +2,7 @@
 #define SHAPE_HPP
 
 #include <string>
+#include <glm/glm.hpp>
 #include "color.hpp"
 
 class Shape {
@@ -16,5 +17,7 @@ class Shape {
 };
 
 std::ostream& operator<<(std::ostream& os, Shape const& s);
+
+std::ostream& operator<<(std::ostream& os, glm::vec3 const& v);
 
 #endif // SHAPE_HPP

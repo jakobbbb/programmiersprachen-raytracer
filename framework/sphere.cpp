@@ -13,3 +13,8 @@ float Sphere::area() const {
 float Sphere::volume() const {
   return std::abs(4.f/3.f * M_PI * std::pow(radius_, 3));
 }
+
+std::ostream& Sphere::print(std::ostream& os) const {
+  os << "Sphere at " << center_ << " radius " << radius_ << ", ";
+  return Shape::print(os);
+}
