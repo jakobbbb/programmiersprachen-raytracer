@@ -1,13 +1,13 @@
 #define CATCH_CONFIG_RUNNER
 
 #include <catch.hpp>
-#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
+#include <iostream>
+#include <memory>
 
-#include <sphere.hpp>
 #include <box.hpp>
-
+#include <sphere.hpp>
 
 TEST_CASE("sphere: area, volume", "[sphere]") {
   GIVEN("a sphere") {
@@ -99,4 +99,20 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
   REQUIRE(hitpoint.intersection_direction == ray_direction);
 }
 
-int main(int argc, char *argv[]) { return Catch::Session().run(argc, argv); }
+void task7() {
+  Color red{255, 0, 0};
+  glm::vec3 position{0.f, 0.f, 0.f};
+
+  std::shared_ptr<Sphere> s1 =
+      std::make_shared<Sphere>(position, 1.2f, "sphere0", red);
+  std::shared_ptr<Shape> s2 =
+      std::make_shared<Sphere>(position, 1.2f, "sphere1", red);
+
+  s1->print(std::cout << "s1: ");
+  s2->print(std::cout << "s2: ") << "\n";
+}
+
+int main(int argc, char *argv[]) {
+  task7();
+  return Catch::Session().run(argc, argv);
+}
