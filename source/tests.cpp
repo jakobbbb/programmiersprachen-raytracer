@@ -2,6 +2,8 @@
 
 #include <catch.hpp>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 
 #include <sphere.hpp>
 #include <box.hpp>
@@ -67,7 +69,34 @@ TEST_CASE("shapes: print", "[shape]") {
   }
 }
 
-int main(int argc, char *argv[])
-{
-  return Catch::Session().run(argc, argv);
+TEST_CASE("intersect_ray_sphere", "[intersect]") {
+  // Ray
+  glm::vec3 ray_origin{0.f, 0.f, 0.f};
+  glm::vec3 ray_direction{0.f, 0.f, 1.f}; // normalized!
+
+  // Sphere
+  glm::vec3 sphere_center{0.f, 0.f, 5.f};
+  float sphere_radius = 1.f;
+
+  float distance = 0.f;
+  auto result = glm::intersectRaySphere(
+      ray_origin, ray_direction,
+      sphere_center,
+      sphere_radius * sphere_radius,
+      distance);
+  REQUIRE(distance == Approx(4.f));
+
+  Color purple{0.42f, 0.09f, 0.59f};
+  Sphere s{sphere_center, sphere_radius, "Bob", purple};
+  Ray r{ray_origin, ray_direction * 4.2f};  // use non-normalized direction
+  auto hitpoint = s.intersect(r);
+  REQUIRE(hitpoint.did_intersect);
+  REQUIRE(hitpoint.distance == Approx(4.f));
+  REQUIRE(hitpoint.name == "Bob");
+  REQUIRE(hitpoint.color == purple);
+  REQUIRE(hitpoint.intersection_point ==
+          ray_origin + (distance * ray_direction));
+  REQUIRE(hitpoint.intersection_direction == ray_direction);
 }
+
+int main(int argc, char *argv[]) { return Catch::Session().run(argc, argv); }
